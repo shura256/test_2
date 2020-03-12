@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.10)
 
-project(test)
+project(srv)
 
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
@@ -9,6 +9,9 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g1 -O0 -ggdb3")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=address -fsanitize-address-use-after-scope -fno-omit-frame-pointer")
 
 add_executable(
-  test
+  srv
   main.cpp
+  listener_worker.cpp
+  log_worker.cpp
+  worker.cpp
 )

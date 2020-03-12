@@ -1,6 +1,3 @@
-#ifndef WORKER_H_
-#define WORKER_H_
-
 #include <chrono>
 #include <string>
 #include <thread>
@@ -18,5 +15,3 @@ void do_work(ThreadsafeQueue<std::string>::Ptr data_queue,
     log_queue->push("json\n" + json + "\nprocessed");
   }
 }
-
-#endif  // WORKER_H_

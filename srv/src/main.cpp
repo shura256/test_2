@@ -4,23 +4,26 @@
 #include <thread>
 #include <vector>
 
-#include "listener_worker.h"
-#include "log_worker.h"
 #include "threadsafe_queue.h"
-#include "worker.h"
+
+void do_listen(const std::string& socket_path,
+               ThreadsafeQueue<std::string>::Ptr data_queue);
+void do_work(ThreadsafeQueue<std::string>::Ptr data_queue,
+             ThreadsafeQueue<std::string>::Ptr log_queue);
+void do_log(ThreadsafeQueue<std::string>::Ptr log_queue);
 
 int main(int argc, char** argv) {
   if (argc < 2) {
-    std::cerr << "usage: " << argv[0] << " <port number>" << std::endl;
+    std::cerr << "usage: " << argv[0] << " <socket path>" << std::endl;
     return -1;
   }
 
-  int port_no = std::stoi(argv[1]);
+  std::string socket_path(argv[1]);
   auto data_queue = std::make_shared<ThreadsafeQueue<std::string>>();
   auto log_queue = std::make_shared<ThreadsafeQueue<std::string>>();
   std::vector<std::thread> threads;
 
-  threads.emplace_back(do_listen, port_no, data_queue);
+  threads.emplace_back(do_listen, socket_path, data_queue);
   threads.emplace_back(do_log, log_queue);
 
   int worker_count = std::thread::hardware_concurrency() - threads.size();

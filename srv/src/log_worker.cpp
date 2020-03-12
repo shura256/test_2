@@ -1,6 +1,3 @@
-#ifndef LOG_WORKER_H_
-#define LOG_WORKER_H_
-
 #include <iostream>
 #include <string>
 
@@ -13,5 +10,3 @@ void do_log(ThreadsafeQueue<std::string>::Ptr log_queue) {
     std::cout << log << std::endl;
   }
 }
-
-#endif  // LOG_WORKER_H_
